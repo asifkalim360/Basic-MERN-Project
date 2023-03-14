@@ -1,0 +1,19 @@
+const express = require("express");     // include express framework
+const mongoose = require('mongoose');   // include mongosse librarry for database fetch
+const app = express();
+
+// create krenge ek function connection bnane ke liye.
+const connectDB = async() => {
+    mongoose.connect('mongodb://127.0.0.1:27017/e-commerce-csbs'); //mongoose ko connect krenge localhost ke sath with databse(e-comm)
+    const productSchema = new mongoose.Schema({});  //database me jb fields ko add,update,delete,edit karna hotahotahai tb schema define karna hota hai.agr humlog data ko sirf fetch karn ahai to schema ko blank chd denge.
+    const product = mongoose.model('product', productSchema);   //model ke through hmlog data ko nikaltehai database se query ke hisab se.
+    const data = await product.find();  //database se data nikalna ek time taking process hota hai eslea esko humlog await ka use krenge esko nikalne me.
+    console.warn(data);
+}
+connectDB();
+
+app.get('/', (req,resp) => {
+    resp.send("app is working.....")
+});
+
+app.listen(5000);
